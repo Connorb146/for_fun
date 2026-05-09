@@ -252,17 +252,17 @@
 
   <main class="card">
     <section id="startScreen">
-      <div class="badge">secret message if you answer right aoao</div>
+      <div class="badge">secret message locked</div>
       <h1>Get these answers right</h1>
       <p>
-        Little tiny official my bb quiz only!
+        Little Tiny my bb quiz aoaoa
       </p>
       <button class="primary-btn" id="startBtn">Start the game 💗</button>
-      <p class="tiny-note">Hint: Most are fotting related.</p>
+      <p class="tiny-note">Hint: fotting related.</p>
     </section>
 
     <section id="quizScreen" class="hidden">
-      <div class="badge">my bb quiz in progress</div>
+      <div class="badge">momma chamma chinga quiz in progress</div>
       <div class="progress-wrap">
         <div class="progress-bar" id="progressBar"></div>
       </div>
@@ -274,6 +274,7 @@
 
       <div class="answer-grid" id="answerGrid"></div>
       <div class="feedback" id="feedback"></div>
+      <button class="primary-btn hidden" id="nextBtn">Next question 💗</button>
     </section>
 
     <section id="finalScreen" class="hidden final-screen">
@@ -288,7 +289,7 @@
         </span>
       </p>
       <button class="primary-btn" id="restartBtn">Play again 💕</button>
-      <p class="tiny-note">Screenshot this. It is legally binding.</p>
+      <p class="tiny-note">Donate to my game development firm via makeout sesh(your donations only).</p>
     </section>
   </main>
 
@@ -298,6 +299,7 @@
     const finalScreen = document.getElementById("finalScreen");
     const startBtn = document.getElementById("startBtn");
     const restartBtn = document.getElementById("restartBtn");
+    const nextBtn = document.getElementById("nextBtn");
     const questionNumber = document.getElementById("questionNumber");
     const questionText = document.getElementById("questionText");
     const answerGrid = document.getElementById("answerGrid");
@@ -314,20 +316,20 @@
           "Holding your hand in Dollar General"
         ],
         correct: 1,
-        correctText: "Correct. That was the moment.",
-        wrongText: "Cute answer, but no. It was holding your hand in Dollar General and everything including the kiss has reinforced."
+        correctText: "Correct. .",
+        wrongText: "No that only reinforced what I knew."
       },
       {
         question: "What is my favorite thing about you?",
         answers: [
-          "Your smile",
-          "Your eyes",
           "Your laugh",
-          "How beautiful and kind you are"
+          "Your eyes",
+          "Your smile",
+          "How beautiful sexy body everything u r"
         ],
         correct: "all",
-        correctText: "Correct. They are all my favorite.",
-        wrongText: "Correct, because every answer is true."
+        correctText: "Correct. .",
+        wrongText: "Correct."
       },
       {
         question: "Who has the worse smelling foots?",
@@ -337,8 +339,8 @@
           "Me, still you, and I love it"
         ],
         correct: "all",
-        correctText: "Correct.",
-        wrongText: "Correct. "
+        correctText: "Correct .",
+        wrongText: "NOPE. The answer is still you."
       }
     ];
 
@@ -347,6 +349,7 @@
 
     startBtn.addEventListener("click", startGame);
     restartBtn.addEventListener("click", startGame);
+    nextBtn.addEventListener("click", goToNextQuestion);
 
     function startGame() {
       currentQuestion = 0;
@@ -360,6 +363,8 @@
     function showQuestion() {
       feedback.textContent = "";
       answerGrid.innerHTML = "";
+      nextBtn.classList.add("hidden");
+      nextBtn.textContent = "Next question 💗";
 
       const q = questions[currentQuestion];
       questionNumber.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
@@ -393,16 +398,24 @@
         feedback.textContent = q.wrongText;
       }
 
+      if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = "Reveal secret message 💖";
+      } else {
+        nextBtn.textContent = "Next question 💗";
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    function goToNextQuestion() {
       currentQuestion++;
       progressBar.style.width = (currentQuestion / questions.length) * 100 + "%";
 
-      setTimeout(() => {
-        if (currentQuestion < questions.length) {
-          showQuestion();
-        } else {
-          showFinalScreen();
-        }
-      }, 1100);
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showFinalScreen();
+      }
     }
 
     function showFinalScreen() {
