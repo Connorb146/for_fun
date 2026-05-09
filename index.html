@@ -1,1 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Do You Love Me?</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffe1ec, #ffd1f3, #e6d4ff);
+      color: #3d1635;
+    }
+
+    .background-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.75;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.7) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(92vw, 520px);
+      min-height: 430px;
+      padding: 34px 28px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 70px rgba(165, 70, 128, 0.28);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #fff0f7;
+      color: #b83280;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(184, 50, 128, 0.12);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 26px;
+      color: #65315a;
+    }
+
+    .buttons {
+      position: relative;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 26px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #ff4f9a, #ff7ab6);
+      color: white;
+      box-shadow: 0 12px 28px rgba(255, 79, 154, 0.35);
+    }
+
+    #yesBtn:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 18px 36px rgba(255, 79, 154, 0.45);
+    }
+
+    #noBtn {
+      position: absolute;
+      background: white;
+      color: #b83280;
+      box-shadow: 0 10px 24px rgba(120, 40, 100, 0.18);
+      left: 58%;
+      top: 36px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .final-screen {
+      animation: popIn 0.55s ease forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.88);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .big-heart {
+      font-size: 5rem;
+      margin: 12px 0;
+      animation: heartbeat 1.15s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.18); }
+      55% { transform: scale(0.96); }
+      75% { transform: scale(1.12); }
+    }
+
+    .message-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 22px;
+      background: #fff3fa;
+      color: #5c2550;
+      box-shadow: inset 0 0 0 1px rgba(184, 50, 128, 0.12);
+    }
+
+    .tiny-note {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #8b5680;
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        padding: 30px 20px;
+      }
+
+      .buttons {
+        height: 150px;
+      }
+
+      #noBtn {
+        left: 50%;
+        top: 78px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background-hearts" id="hearts"></div>
+
+  <main class="card">
+    <section id="questionScreen">
+      <div class="badge">important girlfriend questionnaire</div>
+
+      <h1>Do you love me?</h1>
+
+      <p>
+        Please answer carefully. This is a very serious scientific survey
+        with extremely real emotional consequences.
+      </p>
+
+      <div class="buttons" id="buttonArea">
+        <button id="yesBtn">Yes obviously 💗</button>
+        <button id="noBtn">No</button>
+      </div>
+
+      <div class="tiny-note" id="tinyNote">Choose wisely.</div>
+    </section>
+
+    <section id="finalScreen" class="hidden final-screen">
+      <div class="badge">correct answer submitted</div>
+
+      <div class="big-heart">💖</div>
+
+      <h1>I knew it.</h1>
+
+      <p class="message-box">
+        Good. Because I love you too, and you are my favorite person.
+        This website is now official proof that you love me.
+      </p>
+
+      <p class="tiny-note">Screenshot this for legal purposes.</p>
+    </section>
+  </main>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const buttonArea = document.getElementById("buttonArea");
+    const questionScreen = document.getElementById("questionScreen");
+    const finalScreen = document.getElementById("finalScreen");
+    const tinyNote = document.getElementById("tinyNote");
+    const hearts = document.getElementById("hearts");
+
+    const funnyLines = [
+      "That button is broken. Try the pink one.",
+      "Interesting choice. Incorrect, but interesting.",
+      "No is not currently available.",
+      "You almost clicked it. I saw that.",
+      "The answer key says yes.",
+      "Be honest, silly.",
+      "The no button has entered witness protection.",
+      "Okay now you are just playing hard to get."
+    ];
+
+    let noAttempts = 0;
+
+    function moveNoButton() {
+      noAttempts++;
+
+      const area = buttonArea.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+
+      const maxX = area.width - btn.width;
+      const maxY = area.height - btn.height;
+
+      const randomX = Math.max(0, Math.random() * maxX);
+      const randomY = Math.max(0, Math.random() * maxY);
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+
+      tinyNote.textContent = funnyLines[Math.min(noAttempts - 1, funnyLines.length - 1)];
+
+      const newScale = 1 + noAttempts * 0.12;
+      yesBtn.style.transform = `scale(${newScale})`;
+
+      if (noAttempts >= 6) {
+        noBtn.textContent = "Still no?";
+      }
+
+      if (noAttempts >= 9) {
+        noBtn.textContent = "Fine... yes 💗";
+      }
+    }
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    noBtn.addEventListener("touchstart", function(event) {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", function() {
+      questionScreen.classList.add("hidden");
+      finalScreen.classList.remove("hidden");
+      launchConfettiHearts();
+    });
+
+    function createFloatingHeart() {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = ["💗", "💖", "💕", "💘", "💞"][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 5 + "s";
+      heart.style.fontSize = 18 + Math.random() * 30 + "px";
+
+      hearts.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 9000);
+    }
+
+    function launchConfettiHearts() {
+      for (let i = 0; i < 45; i++) {
+        setTimeout(createFloatingHeart, i * 55);
+      }
+    }
+
+    setInterval(createFloatingHeart, 650);
+  </script>
+</body>
+</html>
